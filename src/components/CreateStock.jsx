@@ -4,7 +4,7 @@ import TopNav from './TopNav'
 import axios from 'axios'
 import { Message } from 'semantic-ui-react'
 import Live from './Live'
-
+import NetWorth from './NetWorth'
 export default class Profile extends Component{
 
         state={
@@ -55,7 +55,7 @@ handleSubmit = (event) => {
             }
             let response = await axios.post(`/stock/create`, this.state.stock ,axiosConfig)
             if(response.status === 200){
-                
+                this.props.updateCapital(this.state.stock.password)
                 let msg = {errors : '' , message: response.data.message}
                 this.setState({
                     msg
@@ -108,6 +108,7 @@ handleSubmit = (event) => {
                     
                 <div style = {{ textAlign:'center'}}>
                     <h2> Capital: {this.props.user.capital.toFixed(2)}</h2>
+                    <NetWorth capital = {this.props.user.capital}/>
                     <hr/>
                     <Live/>
                     </div>

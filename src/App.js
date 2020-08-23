@@ -14,12 +14,13 @@ import SingleStock from './components/SingleStock';
 import Portfolio from './components/Portfolio'
 import axios from 'axios'
 import CreateStock from './components/CreateStock'
-
+import NetWorth from './components/NetWorth'
 
 export default class App extends Component{
     state = {
         login: false,
         user:{
+            id: '',
             email:'',
             name:'',
             capital:0,
@@ -38,8 +39,8 @@ export default class App extends Component{
       }
 
 
-
     updateStock = (data) => {
+        localStorage.setItem('stocks', JSON.stringify(data))
         let stocks = data
         this.setState({
             stocks
@@ -47,10 +48,12 @@ export default class App extends Component{
     }
 
   
-    updateCaptial = async (pw) => {
+    updateCapital = async (pw) => {
+        const token = await JSON.parse(localStorage.getItem('token'))
             let axiosConfig = {
                 headers:{
                   'Content-Type': 'application/json; charset=UTF-8',
+                  'auth-token': token,
                   'Access-Control-Allow-Origin': '*'
                 }
               }
@@ -76,24 +79,31 @@ export default class App extends Component{
             login: true,
             user: updatedUser
         })
+        
     }
     logout = (cb) => {
         cb()
         this.setState({
-            user : {name: "" , email: "" , capital: 0,},
+            user : {name: "" , email: "" , capital: 0, id: ''},
             portfolio: [],
             login:false
         })
         
     }
     componentDidMount(){
+
+        axios.get('/stock/all').then((response) => {
+            this.updateStock(response.data.stocks)
+        })
+
         const data = JSON.parse(localStorage.getItem('user'))
         if (data){
-            const {email , name , capital} = data
+            const {email , name , capital,_id} = data
             let updatedUser = {...this.state.user}
             updatedUser.email = email
             updatedUser.name = name
             updatedUser.capital = capital
+            updatedUser.id = _id
             this.setState({
                 login: true,
                 user: updatedUser
@@ -129,12 +139,13 @@ export default class App extends Component{
                 {this.state.login ? 
                     (
                 <Switch>
-                    <Route exact path= "/" render = {props => <Dashboard  searchTerm = {searchTerm} handleSearch={this.handleSearch} user = {user} logout = {this.logout} updateStock = {this.updateStock} stocks={stocks}  />}/>
+                    <Route exact path= "/" render = {props => <Dashboard  searchTerm = {searchTerm} handleSearch={this.handleSearch} user = {user} logout = {this.logout} updateStock = {this.updateStock} stocks={stocks} />}/>
+                    <Route exact path= "/nw" render = {props => <NetWorth  />}/>
                     <Route exact path= "/profile" render = {props => <Profile  user = {user} logout = {this.logout}  updateUser={this.updateUser} />}/>
                     <Route exact path= "/portfolio" render = {props => <Portfolio  user = {user} logout = {this.logout}   />}/>
-                    <Route exact path= "/createstock" render = {props => <CreateStock  user = {user} logout = {this.logout}   updateStock = {this.updateStock}/>}/>
+                    <Route exact path= "/createstock" render = {props => <CreateStock  user = {user} logout = {this.logout}   updateStock = {this.updateStock} updateCapital = {this.updateCaptial} />}/>
                     <Route excact path='/stock/:id' render={(props) => {
-                    return ( <SingleStock {...props }  logout = {this.logout} user = {user} updateCaptial = {this.updateCaptial} /> )
+                    return ( <SingleStock {...props }  logout = {this.logout} user = {user} updateCapital = {this.updateCapital} networth = {this.getNetWorth}/> )
                 }} />
                     {/* <ProtectedRoute 
                     exact

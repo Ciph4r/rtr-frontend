@@ -7,6 +7,8 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Message } from 'semantic-ui-react'
 import Live from './Live'
+import NetWorth from './NetWorth'
+
 
 function SingleStock (props) {
 
@@ -32,6 +34,18 @@ function SingleStock (props) {
         setErr('')
     }
 
+    // const netWorth = () => {
+    //   console.log(props.stocks)
+    //   let gg = props.stocks.filter((stock) => {
+    //     return stock.owner === props.user.id ? 1 : 0
+    //   })
+      
+    //   // let ff = gg.reduce((a , b) => 
+    //   //    a+b.price * b.units
+    //   // , 0)
+    //   // console.log(ff)
+    // }
+
 
     useEffect(() => {
     getStocks()
@@ -56,6 +70,7 @@ function SingleStock (props) {
           setErr(err.response.data.errors)
         }
     }
+
     const sellStock = async () => {
         clearMsg()
         try{
@@ -86,7 +101,7 @@ function SingleStock (props) {
               }
             setSend(false)
             setRoute('')
-            props.updateCaptial(password)
+            props.updateCapital(password)
             getStocks()
           }
           
@@ -106,6 +121,7 @@ function SingleStock (props) {
                       
                       <div style = {{marginTop : '100px' , textAlign:'center'}}>
                     <h2> Capital: {props.user.capital.toFixed(2)}</h2>
+                    <NetWorth capital = {props.user.capital} />
                     <hr/>
                     <Live/>
                     </div>
