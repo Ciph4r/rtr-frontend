@@ -53,7 +53,7 @@ handleSubmit = (event) => {
                 'Access-Control-Allow-Origin': '*'
               }
             }
-            let response = await axios.post(`/stock/create`, this.state.stock ,axiosConfig)
+            let response = await axios.post(`${process.env.REACT_APP_URL}/stock/create`, this.state.stock ,axiosConfig)
             if(response.status === 200){
                 this.props.updateCapital(this.state.stock.password)
                 let msg = {errors : '' , message: response.data.message}

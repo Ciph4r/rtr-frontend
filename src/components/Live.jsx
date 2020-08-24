@@ -1,28 +1,41 @@
 import React, { useState, useEffect, useRef  } from "react";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:4001";
+import {useHistory} from 'react-router-dom'
+// const ENDPOINT = "http://localhost:4000";
+const ENDPOINT = "https://rag-to-riches.herokuapp.com";
 
-function Live() {
+
+
+
+function Live(props) {
   const [response, setResponse] = useState([]);
   const messagesEndRef = useRef(null)
 
-
+  const history = useHistory()
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    if (messagesEndRef.current !==null){
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
   }
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     socket.on("data", data => {
-        console.log(data)
-      setResponse(data);
-      scrollToBottom()
+      if (response.length < 30){
+        setResponse(data)
+        scrollToBottom()
+      }
+      else if (data[data.length -1].timestamp !== response[response.length -1].timestamp){
+        setResponse(data)
+        scrollToBottom()
+      }
     });
   }, []);
 
   return (
-    <div style ={{height: '300px' ,overflowY: 'scroll' , overflowAnchor:'none'}} >
+    <div style ={{height: '300px' ,overflowY: 'scroll' }} >
         <ul style={{listStyleType:'none' }} >
         {response.map((item, i) => (
         <li key={item._id}>
@@ -37,9 +50,14 @@ function Live() {
             </div>
             </li>
         ))}
-        <div ref={messagesEndRef} />
+        <div />
+        <div ref={messagesEndRef}></div>
       </ul>
-      <div style = {{overflowAnchor: 'auto' , height:'1px'}}></div>
+      <button className='ui button grey' onClick = {() => {
+        history.push('/history')
+      }}>
+        See Full History
+      </button>
     </div>
   );
 }

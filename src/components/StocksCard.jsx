@@ -40,7 +40,6 @@ export default function StockCard(props) {
 
 
 const {name , price , units , history } = props.stock
- console.log(history)
   return (
     <Card className={classes.root}>
       <div>
@@ -60,11 +59,11 @@ const {name , price , units , history } = props.stock
       </CardContent>
      
 
-      <CardActions disableSpacing>
+      {/* <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }

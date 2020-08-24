@@ -25,7 +25,7 @@ function SingleStock (props) {
 
 
     const getStocks = async () => {
-        let data = await axios.get(`/stock/stock/${id}`)
+        let data = await axios.get(`${process.env.REACT_APP_URL}/stock/stock/${id}`)
         await setStock(data.data.stock)
         await setHistory([...data.data.stock.history])
     }
@@ -62,7 +62,7 @@ function SingleStock (props) {
                 'Access-Control-Allow-Origin': '*'
               }
             }
-            let data = await axios.put(`/stock/buy/${id}`,{email:props.user.email, order: Number(number) , password : password} ,axiosConfig)
+            let data = await axios.put(`${process.env.REACT_APP_URL}/stock/buy/${id}`,{email:props.user.email, order: Number(number) , password : password} ,axiosConfig)
             setMsg(data.data.message)
         }
 
@@ -82,7 +82,7 @@ function SingleStock (props) {
                   'Access-Control-Allow-Origin': '*'
                 }
               }
-              let data = await axios.put(`/stock/sell/${id}`,{email:props.user.email, sell: Number(number) , password: password} ,axiosConfig)
+              let data = await axios.put(`${process.env.REACT_APP_URL}/stock/sell/${id}`,{email:props.user.email, sell: Number(number) , password: password} ,axiosConfig)
               setMsg(data.data.message)
           }
 

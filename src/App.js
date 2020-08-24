@@ -10,11 +10,10 @@ import NotFound from './components/NotFound'
 // import axios from 'axios'
 // import {ProtectedRoute} from './components/protected.route'
 import SingleStock from './components/SingleStock';
-// import history from './middleware/history'
 import Portfolio from './components/Portfolio'
 import axios from 'axios'
 import CreateStock from './components/CreateStock'
-import NetWorth from './components/NetWorth'
+import History from './components/History'
 
 export default class App extends Component{
     state = {
@@ -57,7 +56,7 @@ export default class App extends Component{
                   'Access-Control-Allow-Origin': '*'
                 }
               }
-           let response = await axios.post('/users/user',{email: this.state.user.email , password: pw}, axiosConfig)
+           let response = await axios.post(`${process.env.REACT_APP_URL}/users/user`,{email: this.state.user.email , password: pw}, axiosConfig)
            const capital = response.data.user.capital
            let updatedUser = {...this.state.user}
            updatedUser.capital = capital
@@ -92,7 +91,7 @@ export default class App extends Component{
     }
     componentDidMount(){
 
-        axios.get('/stock/all').then((response) => {
+        axios.get(`${process.env.REACT_APP_URL}/stock/all`).then((response) => {
             this.updateStock(response.data.stocks)
         })
 
@@ -140,13 +139,13 @@ export default class App extends Component{
                     (
                 <Switch>
                     <Route exact path= "/" render = {props => <Dashboard  searchTerm = {searchTerm} handleSearch={this.handleSearch} user = {user} logout = {this.logout} updateStock = {this.updateStock} stocks={stocks} />}/>
-                    <Route exact path= "/nw" render = {props => <NetWorth  />}/>
                     <Route exact path= "/profile" render = {props => <Profile  user = {user} logout = {this.logout}  updateUser={this.updateUser} />}/>
                     <Route exact path= "/portfolio" render = {props => <Portfolio  user = {user} logout = {this.logout}   />}/>
                     <Route exact path= "/createstock" render = {props => <CreateStock  user = {user} logout = {this.logout}   updateStock = {this.updateStock} updateCapital = {this.updateCaptial} />}/>
                     <Route excact path='/stock/:id' render={(props) => {
                     return ( <SingleStock {...props }  logout = {this.logout} user = {user} updateCapital = {this.updateCapital} networth = {this.getNetWorth}/> )
                 }} />
+                    <Route exact path= "/history" render = {props => <History  user = {user} logout = {this.logout}  updateUser={this.updateUser} />}/>
                     {/* <ProtectedRoute 
                     exact
                     path= "/profile"

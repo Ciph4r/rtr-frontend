@@ -5,6 +5,9 @@ import axios from 'axios'
 import { Card } from 'semantic-ui-react'
 import {Link } from 'react-router-dom'
 import Live from './Live'
+import NetWorth from './NetWorth'
+
+
 export default class Profile extends Component{
                 state= {
                     stocks: []
@@ -22,13 +25,12 @@ componentDidMount(){
                   'Access-Control-Allow-Origin': '*'
                 }
               }
-              let portfolio = await axios.get(`/portfolio/${this.props.user.email}` ,axiosConfig)
+              let portfolio = await axios.get(`${process.env.REACT_APP_URL}/portfolio/${this.props.user.email}` ,axiosConfig)
               
               let stocks = portfolio.data.portfolio.stocks
               this.setState({
                   stocks
               })
-              console.log(this.state.stocks)
           }
           catch(err){
             
@@ -48,6 +50,7 @@ componentDidMount(){
             <div style = {{display:'flex' , marginTop:'100px'}}>
             <div style = {{ textAlign:'center' , width:'100%'}}>
                     <h2> Capital: {this.props.user.capital.toFixed(2)}</h2>
+                    <NetWorth capital = {this.props.user.capital}/>
                     <hr/>
                     <Live/>
                     </div>

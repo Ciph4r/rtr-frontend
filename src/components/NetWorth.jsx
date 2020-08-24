@@ -24,7 +24,7 @@ export default class NetWorth extends Component{
                       'Access-Control-Allow-Origin': '*'
                     }
                   }
-                  let response = await axios.get(`/portfolio/${user.email}` ,axiosConfig)
+                  let response = await axios.get(`${process.env.REACT_APP_URL}/portfolio/${user.email}` ,axiosConfig)
                   let portfolio = response.data.portfolio.stocks
 
                   let net2 = 0
@@ -63,7 +63,7 @@ export default class NetWorth extends Component{
     render() {
         return(
             <div>
-                <h2>{this.state.netWorth}</h2>
+                <h2>NetWorth: {this.state.netWorth}</h2>
             </div>
         )
     }

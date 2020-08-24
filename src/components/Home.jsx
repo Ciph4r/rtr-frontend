@@ -46,16 +46,24 @@ export default class Home extends Component{
                   'Access-Control-Allow-Origin': '*'
                 }
               }
-            axios.post('/users/signup', this.state.user, axiosConfig)
+            axios.post(`${process.env.REACT_APP_URL}/users/signup`, this.state.user , axiosConfig)
             .then((response) => {
+                // console.log(response)
+                if (response.status === 200){
+                //     Authentication.login(()=> {
+                //         this.props.updateUser(response.data)
+                //     } , response.data.user , response.data.token)
                 this.setState({
-                    signup:false,
+                    signup: false,
                     msg: 'You have Signed Up, You can now login'
                 })
+                }
+                
+
 
             })
             .catch((err) => {
-               
+                if(err.response.data.errors)
                 this.setState({
                     errors : err.response.data.errors
                 })
@@ -71,7 +79,7 @@ export default class Home extends Component{
                   'Access-Control-Allow-Origin': '*'
                 }
               }
-            axios.post('/users/login', this.state.user, axiosConfig)
+            axios.post(`${process.env.REACT_APP_URL}/users/login`, this.state.user, axiosConfig)
             .then((response) => {
                 
                 Authentication.login(()=> {

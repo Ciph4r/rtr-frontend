@@ -51,7 +51,7 @@ handleSubmit = (event) => {
                 'Access-Control-Allow-Origin': '*'
               }
             }
-            let response = await axios.put(`/users/update`, this.state.user ,axiosConfig)
+            let response = await axios.put(`${process.env.REACT_APP_URL}/users/update`, this.state.user ,axiosConfig)
             if(response.status === 200){
                 
                 
@@ -85,7 +85,7 @@ handleSubmit = (event) => {
 }
 
 componentDidMount(){
-    let updateState = {...this.props.user , userEmail: this.props.user.email}
+    let updateState = {...this.props.user , userEmail: this.props.user.email , email: ""}
 
     this.setState({
         user:updateState
@@ -145,12 +145,12 @@ componentDidMount(){
                                 <input type='text' name='name' value={name} onChange={this.handleChange} />
                             </div>
                         </div>
-                        {/* <div className='field'>
+                        <div className='field'>
                             <label htmlFor='subject'>Email</label>
                             <div className='ui fluid input'>
                                 <input type='email' name='email' value={email} onChange={this.handleChange} />
                             </div>
-                        </div> */}
+                        </div>
                         <div className='field'>
                             <label htmlFor='article'>New Password</label>
                             <div className='ui fluid input'>

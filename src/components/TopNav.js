@@ -126,7 +126,7 @@ export default function MenuAppBar(props) {
                 onClose={handleClose}
               >
                 <MenuItem onClick={() => {history.push("/profile") }}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
                 <MenuItem onClick={() => {
                     Authentication.logout(() => {
                         props.logout(()=> {history.push("/")})

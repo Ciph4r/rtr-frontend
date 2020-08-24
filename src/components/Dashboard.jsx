@@ -16,7 +16,7 @@ export default class Dashboard extends Component{
 
 
     componentDidMount(){
-        axios.get('/stock/all').then((response) => {
+        axios.get(`${process.env.REACT_APP_URL}/stock/all`).then((response) => {
             this.props.updateStock(response.data.stocks)
         })
     }
