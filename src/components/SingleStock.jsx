@@ -8,7 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Message } from 'semantic-ui-react'
 import Live from './Live'
 import NetWorth from './NetWorth'
-
+import LeaderBoards from './LeaderBoards'
 
 function SingleStock (props) {
 
@@ -124,6 +124,9 @@ function SingleStock (props) {
                     <NetWorth capital = {props.user.capital} />
                     <hr/>
                     <Live/>
+                    <div style={{marginTop:'50px'}}>
+                    <LeaderBoards/>
+                    </div>
                     </div>
                       
 
