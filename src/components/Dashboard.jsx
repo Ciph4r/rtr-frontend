@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom'
 import search from '../middleware/search'
 import Search from './Search'
 import Live from './Live'
-
+import LeaderBoards from './LeaderBoards'
 
 
 export default class Dashboard extends Component{
@@ -28,6 +28,14 @@ export default class Dashboard extends Component{
             <div>
                 <TopNav user = {this.props.user} logout = {this.props.logout}>Home</TopNav>
                 <div style ={{display:'flex' , marginTop: '100px'}}>
+                <Container maxWidth = 'sm'>
+                <div >
+                 <Live/>
+                 <div style={{marginTop:'50px'}}>
+                    <LeaderBoards/>
+                    </div>
+                </div>
+            </Container>
                 <Container maxWidth='lg'>
                 <Search searchTerm = {this.props.searchTerm} handleSearch={this.props.handleSearch}  />
                 <Grid container spacing={3} justify = {'center'} style = {{marginTop: '50px'}}>
@@ -41,11 +49,7 @@ export default class Dashboard extends Component{
                 })}
                 </Grid>
             </Container>
-            <Container maxWidth = 'sm'>
-                <div >
-                 <Live></Live>
-                </div>
-            </Container>
+
                 </div>
             </div>
         )

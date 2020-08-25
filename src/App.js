@@ -14,6 +14,8 @@ import Portfolio from './components/Portfolio'
 import axios from 'axios'
 import CreateStock from './components/CreateStock'
 import History from './components/History'
+import LeaderBoards from './components/LeaderBoards'
+
 
 export default class App extends Component{
     state = {

@@ -5,6 +5,7 @@ import axios from 'axios'
 import { Message } from 'semantic-ui-react'
 import Live from './Live'
 import NetWorth from './NetWorth'
+import LeaderBoards from './LeaderBoards'
 export default class Profile extends Component{
 
         state={
@@ -111,6 +112,9 @@ handleSubmit = (event) => {
                     <NetWorth capital = {this.props.user.capital}/>
                     <hr/>
                     <Live/>
+                    <div style={{marginTop:'50px'}}>
+                    <LeaderBoards/>
+                    </div>
                     </div>
 {/* 
                     <div style = {{display:'flex' ,flexDirection:'column' , alignItems:'center' , marginTop:'20px'}}>
