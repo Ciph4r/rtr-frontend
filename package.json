@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://rag-to-riches.herokuapp.com/"
+  "proxy": "/api"
 }

@@ -24,24 +24,33 @@ export default class LeaderBoards extends Component{
               throw(err)
           }
     }
+    setData = async () => {
+        let leaderBoards = await this.getLeaderBoards()
+            this.setState({
+                leaderBoards 
+            })
+        }
 
-    // compare = (state , data) => {
-    //     for(let i=0;i<data.length;i++) 
-    //     if(this.state.leaderBoards.length <  1|| data[i].netWorth!==state.netWorth[i]) 
-    //      return "False"; 
-    //      return "True"; 
-    //    } 
+    compare = (state , data) => {
+        for(let i=0;i<data.length;i++) 
+        if(this.state.leaderBoards.length <  1|| data[i].netWorth!==state.netWorth[i]) 
+         return "False"; 
+         return "True"; 
+       } 
 
     componentDidMount(){
-        const getData = async () => {
-            let leaderBoards = await this.getLeaderBoards()
-                this.setState({
-                    leaderBoards 
-                })
-            }
-            getData()
+            this.setData()
         }
-       
+
+        // componentDidUpdate(prevProps, prevState) {
+        //     let leaderBoards = this.getLeaderBoards()
+        //     console.log(leaderBoards)
+
+        //     if (prevState.leaderBoards !== this.state.leaderBoards) {
+              
+        //       console.log(1)
+        //     }
+        //   }
   
     
 
